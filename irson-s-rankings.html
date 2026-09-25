@@ -1,276 +1,171 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Irson's Goal & Master Travel Matrix</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Irson's Goal</title>
     <style>
-        :root {
-            --primary: #2c3e50;
-            --secondary: #3498db;
-            --accent: #e74c3c;
-            --light: #f8f9fa;
-            --dark: #333333;
-            --tier1: #d4edda;
-            --tier2: #fff3cd;
-            --tier3: #f8d7da;
-        }
+      :root {
+        --primary-color: #1e3a8a;
+        --accent-color: #2563eb;
+        --bg-color: #f8fafc;
+        --card-bg: #ffffff;
+        --text-color: #334155;
+        --heading-color: #0f172a;
+      }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--dark);
-            background-color: var(--light);
-            margin: 0;
-            padding: 20px;
-        }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            padding: 40px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
+      body {
+        font-family:
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          Oxygen,
+          Ubuntu,
+          Cantarell,
+          "Open Sans",
+          "Helvetica Neue",
+          sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-color);
+        line-height: 1.6;
+        padding: 40px 20px;
+      }
 
-        h1, h2, h3 {
-            color: var(--primary);
-        }
+      .container {
+        max-width: 700px;
+        margin: 0 auto;
+      }
 
-        h1 {
-            text-align: center;
-            border-bottom: 3px solid var(--secondary);
-            padding-bottom: 15px;
-            margin-bottom: 30px;
-        }
+      h1 {
+        text-align: center;
+        text-transform: uppercase;
+        color: var(--primary-color);
+        letter-spacing: 2px;
+        margin-bottom: 24px;
+        font-size: 2rem;
+      }
 
-        /* Goals Section Styling */
-        .goals-section {
-            background: #eef2f7;
-            border-left: 5px solid var(--secondary);
-            padding: 25px;
-            margin-bottom: 40px;
-            border-radius: 4px;
-        }
+      h2 {
+        color: var(--primary-color);
+        font-size: 1.1rem;
+        margin-bottom: 12px;
+      }
 
-        .goals-section h2 {
-            margin-top: 0;
-            color: var(--secondary);
-        }
+      .goal-card {
+        background: var(--card-bg);
+        border-radius: 12px;
+        padding: 24px 28px;
+        margin-bottom: 16px;
+        box-shadow:
+          0 4px 6px -1px rgba(0, 0, 0, 0.05),
+          0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        border-left: 5px solid var(--accent-color);
+      }
 
-        .goals-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
+      .focus-card {
+        background: #eff6ff;
+        border: 1px solid #bfdbfe;
+        border-radius: 12px;
+        padding: 24px 28px;
+        margin: 24px 0;
+      }
 
-        .goal-card {
-            background: white;
-            padding: 15px 20px;
-            border-radius: 6px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
+      .focus-card ol {
+        padding-left: 20px;
+      }
 
-        .goal-card h4 {
-            margin: 0 0 10px 0;
-            color: var(--primary);
-            font-size: 1.1rem;
-        }
+      .focus-card li {
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: var(--heading-color);
+      }
 
-        .goal-card p {
-            margin: 0;
-            font-size: 0.95rem;
-        }
+      footer {
+        text-align: center;
+        margin-top: 32px;
+        font-style: italic;
+        color: #64748b;
+      }
 
-        .focus-list {
-            margin-top: 15px;
-            background: white;
-            padding: 15px 20px;
-            border-radius: 6px;
-        }
-
-        /* Table Section Styling */
-        .table-container {
-            overflow-x: auto;
-            margin-top: 20px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-            font-size: 0.9rem;
-        }
-
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        th {
-            background-color: var(--primary);
-            color: white;
-            position: sticky;
-            top: 0;
-        }
-
-        tr.tier-1 { background-color: var(--tier1); }
-        tr.tier-2 { background-color: var(--tier2); }
-        tr.tier-3 { background-color: var(--tier3); }
-
-        tr:hover {
-            opacity: 0.9;
-        }
-
-        .tier-header {
-            background-color: var(--primary) !important;
-            color: white;
-            font-weight: bold;
-            text-align: center;
-            font-size: 1.1rem;
-        }
-
-        .footer-note {
-            margin-top: 30px;
-            text-align: center;
-            font-style: italic;
-            color: #666;
-        }
+      footer p {
+        margin-bottom: 8px;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
+    <main class="container">
+      <h1>Irson's Goal</h1>
 
-<div class="container">
-    <h1>Irson's Master Blueprint & Vision Matrix</h1>
-
-    <!-- GOALS SECTION -->
-    <section class="goals-section">
-        <h2>Irson's Core Goals & Life Roadmap</h2>
-        <p><strong>Health & Vitality:</strong> All ears are good listening, healed, and able to hear more clearly. The whole body is complete, perfect, functioning well, and normal.</p>
-        <p><strong>Personal & Family:</strong> Single, no girlfriend, live together with Dad, Mom, and Kelly, no need to think about girls anymore. God has given us to live in the best country for us, which is living in the United States.</p>
-        
-        <div class="goals-grid">
-            <div class="goal-card">
-                <h4>🖥️ Web Development & Career</h4>
-                <p><strong>Target Oct 1, 2027:</strong> Finished Learning Web Development.</p>
-                <p><strong>Target Nov 30, 2027:</strong> Work remotely for a U.S. company.</p>
-            </div>
-            <div class="goal-card">
-                <h4>👵 Family Healthcare</h4>
-                <p><strong>Target Oct 1, 2028:</strong> Get medical treatment for Grandma (Nainai) in the United States, so that Grandma stays healthy and lives a long life.</p>
-            </div>
-            <div class="goal-card">
-                <h4>🚗 Domestic Travel & Tesla</h4>
-                <p><strong>Target May 15, 2029:</strong> Buy a Tesla car to take road trips around New York, Long Island, Upstate, and out of state; travel around the United States, no need to travel abroad anymore.</p>
-            </div>
-            <div class="goal-card">
-                <h4>🏡 Permanent Home</h4>
-                <p><strong>Target Jun 30, 2030:</strong> Buy a home at 83-45 Vietor Avenue, Elmhurst, Queens, New York; live in the United States, the best country, no need to move, no need to think about other countries anymore.</p>
-            </div>
-            <div class="goal-card">
-                <h4>✈️ Dual Focus Future</h4>
-                <p><strong>Target Jan 1, 2035:</strong> We live and travel in the United States, visit family in Indonesia; only 2 countries, no need to go anywhere else abroad.</p>
-            </div>
+      <section aria-label="Personal Goals">
+        <div class="goal-card">
+          All ears are good listening, healed, and able to hear more clearly.
+        </div>
+        <div class="goal-card">
+          The whole body is complete, perfect, functioning well, and normal.
+        </div>
+        <div class="goal-card">
+          Single, no girlfriend, live together with Dad, Mom, and Kelly, no need
+          to think about girls anymore.
+        </div>
+        <div class="goal-card">
+          God has given us to live in the best country for us, which is live
+          in the United States.
+        </div>
+        <div class="goal-card">
+          Finished Learning Web Development. (Target: October 1, 2027)
+        </div>
+        <div class="goal-card">
+          I want to work remotely for a U.S. company. (Target: November 30, 2027)
+        </div>
+        <div class="goal-card">
+          Get medical treatment for Grandma (Nainai) in the United States, so
+          that Grandma stays healthy and lives a long life. (Target: October 1,
+          2028)
+        </div>
+        <div class="goal-card">
+          Buy a Tesla car to take road trips around New York, Long Island,
+          Upstate, and out of state; travel around the United States, no need to
+          travel abroad anymore. (Target: May 15, 2029)
         </div>
 
-        <div class="focus-list">
-            <h4 style="margin-top:0; color:var(--primary);">Achieved by focusing on:</h4>
-            <ul>
-                <li>Learning Web Development</li>
-                <li>Learning English</li>
-                <li>Learning Chinese (Simplified)</li>
-            </ul>
-            <p style="margin-bottom:0;"><em>All of this is completely true in Irson's Goal. Dad, Mom, Kelly, and I all remember this very well in Irson's Goal. I want these dreams to be achieved in Irson's Goal.</em></p>
+        <div class="goal-card">
+          Buy a home at 83-45 Vietor Avenue, Elmhurst, Queens, New York; live in
+          the United States, the best country, no need to move, no need to think
+          about other countries anymore. (Target: June 30, 2030)
         </div>
-    </section>
 
-    <!-- TRAVEL MATRIX SECTION -->
-    <section>
-        <h2>The Correct "Luke Patrick Travel Only" Master Matrix (1–50)</h2>
-        <p>Evaluated strictly by criteria: Value for Money, Safety Indices, Public Transit, Cleanliness, Hospitality, and Authenticity.</p>
-        
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Rank</th>
-                        <th>Country</th>
-                        <th>Tier</th>
-                        <th>Luke's Criteria Profile</th>
-                        <th>Primary Travel Insight & Logic</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- TIER 1 -->
-                    <tr><td colspan="5" class="tier-header">TIER 1: THE ELITE TRAVEL PARADISES (High Safety • Elite Value • Seamless Transit)</td></tr>
-                    <tr class="tier-1"><td>1</td><td>🇵🇱 Poland</td><td>Tier 1</td><td>Undisputed Champion</td><td>His absolute best European country. Flawless public rail, ultra-clean, exceptionally safe, and high affordability.</td></tr>
-                    <tr class="tier-1"><td>2</td><td>🇹🇷 Türkiye</td><td>Tier 1</td><td>10/10 Local Hospitality</td><td>Unrivaled standard for traveler treatment, elite food scene, and incredible spontaneous warmth.</td></tr>
-                    <tr class="tier-1"><td>3</td><td>🇮🇩 Indonesia</td><td>Tier 1</td><td>Elite Global Budget Haven</td><td>Exceptional tropical landscape, rich culture, and elite-tier lifestyle value for just $20–$35/day.</td></tr>
-                    <tr class="tier-1"><td>4</td><td>🇧🇦 Bosnia & Herz.</td><td>Tier 1</td><td>10/10 Hospitality & Nature</td><td>Deeply warm population, highly affordable, and pristine untouched mountain scenery.</td></tr>
-                    <tr class="tier-1"><td>5</td><td>🇭🇺 Hungary</td><td>Tier 1</td><td>Top Tier Cities & Value</td><td>Budapest holds his title as a premier liveable city; perfect balance of culture, romance, and low cost.</td></tr>
-                    <tr class="tier-1"><td>6</td><td>🇸🇮 Slovenia</td><td>Tier 1</td><td>Exceptional Public Safety</td><td>Orderly, exceptionally green, peaceful nature, and entirely free from mass commercial stress.</td></tr>
-                    <tr class="tier-1"><td>7</td><td>🇷🇸 Serbia</td><td>Tier 1</td><td>10/10 Hospitality & Energy</td><td>Welcoming crowds, legendary local energy, and Belgrade's immense cultural vibrancy.</td></tr>
-                    <tr class="tier-1"><td>8</td><td>🇲🇰 North Macedonia</td><td>Tier 1</td><td>Elite Budget Value</td><td>Massive natural landscape beauty paired with Europe's absolute lowest day-to-day traveler costs.</td></tr>
-                    <tr class="tier-1"><td>9</td><td>🇭🇷 Croatia</td><td>Tier 1</td><td>Top Tier Coastal Aesthetics</td><td>Striking coastal beauty; highlights secondary gems like Zadar over packed tourist hotspots.</td></tr>
-                    <tr class="tier-1"><td>10</td><td>🇱🇻 Latvia</td><td>Tier 1</td><td>Underrated Quality of Life</td><td>Lived here for 6 months; ranks Riga heavily as a peaceful, highly affordable capital with low crowds.</td></tr>
-                    <tr class="tier-1"><td>11</td><td>🇨🇿 Czechia</td><td>Tier 1</td><td>High Architecture & Culture</td><td>Elite transport networks; strongly recommends vibrant secondary hubs like Brno over crowded Prague.</td></tr>
-                    <tr class="tier-1"><td>12</td><td>🇷🇴 Romania</td><td>Tier 1</td><td>High Safety & Character</td><td>A safe, deeply misunderstood gem with pristine nightlife; Bucharest is a major platform favorite.</td></tr>
-                    <tr class="tier-1"><td>13</td><td>🇪🇪 Estonia</td><td>Tier 1</td><td>High Tech & Modern Transit</td><td>Clean Baltic choice that seamlessly blends medieval charm with high-tech lifestyle convenience.</td></tr>
-
-                    <!-- TIER 2 -->
-                    <tr><td colspan="5" class="tier-header">TIER 2: MODERATE TRAVEL REALITIES (High Friction • Balanced Value or High-Cost Safety)</td></tr>
-                    <tr class="tier-2"><td>14</td><td>🇵🇹 Portugal</td><td>Tier 2</td><td>Personal Western Favorite</td><td>His highest-ranked Western European nation; highly liveable, sunny, and rich culture.</td></tr>
-                    <tr class="tier-2"><td>15</td><td>🇲🇩 Moldova</td><td>Tier 2</td><td>Mid Tier Underrated</td><td>Low crowd density, incredibly affordable, but carries simplified transit networks.</td></tr>
-                    <tr class="tier-2"><td>16</td><td>🇦🇱 Albania</td><td>Tier 2</td><td>Mediterranean Budget Dupe</td><td>Excellent Balkan beach views and coastal towns without Western European price tags.</td></tr>
-                    <tr class="tier-2"><td>17</td><td>🇲🇪 Montenegro</td><td>Tier 2</td><td>Striking Fjord Nature</td><td>Gorgeous Kotor Bay views, though high tourist traffic in summer slightly reduces daily quality.</td></tr>
-                    <tr class="tier-2"><td>18</td><td>🇧🇬 Bulgaria</td><td>Tier 2</td><td>Practical Budget Hub</td><td>Very functional and wallet-friendly, though Sofia carries a grittier aesthetic than Warsaw.</td></tr>
-                    <tr class="tier-2"><td>19</td><td>🇱🇹 Lithuania</td><td>Tier 2</td><td>Quiet Baltic Base</td><td>Peaceful and highly modern, but carries a noticeably quieter social atmosphere than Latvia.</td></tr>
-                    <tr class="tier-2"><td>20</td><td>🇸🇰 Slovakia</td><td>Tier 2</td><td>High Mountain Trekking</td><td>Great natural scenery value, though Bratislava is noted as a very brief transit stop.</td></tr>
-                    <tr class="tier-2"><td>21</td><td>🇬🇪 Georgia</td><td>Tier 2</td><td>Elite Culinary Depth</td><td>Phenomenal food traditions on the geographic edge, though further from the core European grid.</td></tr>
-                    <tr class="tier-2"><td>22</td><td>🇽🇰 Kosovo</td><td>Tier 2</td><td>Warm Regional Transit</td><td>Incredibly friendly population, but frequently bypassed on standard loops for broader coastal routes.</td></tr>
-                    <tr class="tier-2"><td>23</td><td>🇬🇷 Greece</td><td>Tier 2</td><td>Heavy Tourism Friction</td><td>Phenomenal culinary scene heavily deducted due to intense cruise ship crowd congestion.</td></tr>
-                    <tr class="tier-2"><td>24</td><td>🇦🇹 Austria</td><td>Tier 2</td><td>Balanced Alpine Quality</td><td>Flawless public infrastructure and exceptionally clean, but carries higher consumer costs.</td></tr>
-                    <tr class="tier-2"><td>25</td><td>🇩🇪 Germany</td><td>Tier 2</td><td>Region-Dependent Transit</td><td>Strong infrastructure; explicitly notes Bavaria (especially Nuremberg) as his favorite area.</td></tr>
-                    <tr class="tier-2"><td>26</td><td>🇳🇱 The Netherlands</td><td>Tier 2</td><td>His Birthplace / Home Base</td><td>Efficient and orderly, but noted as having individualistic limits on classic hospitality.</td></tr>
-                    <tr class="tier-2"><td>27</td><td>🇩🇰 Denmark</td><td>Tier 2</td><td>High Cost / Elite Safety</td><td>Exceptional marks for safety and bikeability, but baseline consumer prices are restrictive.</td></tr>
-                    <tr class="tier-2"><td>28</td><td>🇪🇸 Spain</td><td>Tier 2</td><td>High Beauty / Overtourism</td><td>Gorgeous geography dragged down by intense overcrowding friction in major hubs.</td></tr>
-                    <tr class="tier-2"><td>29</td><td>🇮🇪 Ireland</td><td>Tier 2</td><td>High Warmth / Severe Cost</td><td>Exceptionally welcoming locals, but Dublin's severe housing crisis spikes travel costs.</td></tr>
-                    <tr class="tier-2"><td>30</td><td>🇫🇮 Finland</td><td>Tier 2</td><td>Social Accessibility Gap</td><td>Elite public safety indices balanced by an initially colder, highly reserved social landscape.</td></tr>
-                    <tr class="tier-2"><td>31</td><td>🇸🇪 Sweden</td><td>Tier 2</td><td>High Consumer Expenses</td><td>Exceptionally clean, but drops lower than Denmark due to metropolitan crime trends.</td></tr>
-                    <tr class="tier-2"><td>32</td><td>🇨🇾 Cyprus</td><td>Tier 2</td><td>Tourist Microclimate</td><td>Sunny and relaxing, but highly commercialized for resort packages over local integration.</td></tr>
-                    <tr class="tier-2"><td>33</td><td>🇲🇹 Malta</td><td>Tier 2</td><td>High Urban Density</td><td>Fascinating historic stone architecture, but intense crowds and vehicle traffic lower daily quality.</td></tr>
-                    <tr class="tier-2"><td>34</td><td>🇦🇩 Andorra</td><td>Tier 2</td><td>Duty-Free Mountain Cross</td><td>Great ski slopes, but largely functions as a brief commercial mountain crossing.</td></tr>
-                    <tr class="tier-2"><td>35</td><td>🇱🇮 Liechtenstein</td><td>Tier 2</td><td>Quiet Commuter Zone</td><td>Beautiful alpine valley, but lacks an expansive, standalone local culture for budget travelers.</td></tr>
-                    <tr class="tier-2"><td>36</td><td>🇱🇺 Luxembourg</td><td>Tier 2</td><td>Sterile Corporate Vibe</td><td>Wealthy and exceptionally clean, but carries a quiet corporate environment that feels sterile.</td></tr>
-                    <tr class="tier-2"><td>37</td><td>🇸🇲 San Marino</td><td>Tier 2</td><td>Brief Day-Trip</td><td>Incredible fortress views, but serves primarily as a brief commercial souvenir stop.</td></tr>
-                    <tr class="tier-2"><td>38</td><td>🇻🇦 Vatican City</td><td>Tier 2</td><td>Mass Crowd Congestion</td><td>Immense historical value, but suffers from extreme tourist density and zero residential neighborhood feel.</td></tr>
-
-                    <!-- TIER 3 -->
-                    <tr><td colspan="5" class="tier-header">TIER 3: THE TRAVEL DEFICITS (Severe Financial Penalties • Low Safety • High Friction)</td></tr>
-                    <tr class="tier-3"><td>39</td><td>🇮🇹 Italy</td><td>Tier 3</td><td>Intense Crowd Friction</td><td>High culinary points, but heavily penalized for chaotic tour groups and common pickpocket hot zones.</td></tr>
-                    <tr class="tier-3"><td>40</td><td>🇬🇧 United Kingdom</td><td>Tier 3</td><td>Prohibitive Expenses</td><td>Outwardly polite, but severely dragged down by London's unsustainable accommodation costs.</td></tr>
-                    <tr class="tier-3"><td>41</td><td>🇨🇭 Switzerland</td><td>Tier 3</td><td>Extreme Price Barrier</td><td>Flawless mountain landscapes completely ruined by eye-watering, elite consumer pricing.</td></tr>
-                    <tr class="tier-3"><td>42</td><td>🇳🇴 Norway</td><td>Tier 3</td><td>Restrictive Budget Strain</td><td>Impeccable natural fjords, but daily cost models make prolonged budget travel impossible.</td></tr>
-                    <tr class="tier-3"><td>43</td><td>🇲🇨 Monaco</td><td>Tier 3</td><td>Sterile Luxury Trap</td><td>Severely penalized as an overpriced enclave entirely lacking authentic community depth.</td></tr>
-                    <tr class="tier-3"><td>44</td><td>🇮🇸 Iceland</td><td>Tier 3</td><td>Severe Affordability Penalty</td><td>Out-of-this-world volcanic terrain, but completely unsustainable for standard travel budgets.</td></tr>
-                    <tr class="tier-3"><td>45</td><td>🇧🇪 Belgium</td><td>Tier 3</td><td>Low Quality / High Friction</td><td>Functional cities, but urban transit areas and Brussels routinely score very low on charm.</td></tr>
-                    <tr class="tier-3"><td>46</td><td>🇫🇷 France</td><td>Tier 3</td><td>Capital Exhaustion Deficit</td><td>Highly penalized due to intense tourism friction, scams, and low safety scores (42.0) in Paris.</td></tr>
-                    <tr class="tier-3"><td>47</td><td>🇺🇸 United States</td><td>Tier 3</td><td>Worst Travel Value Hub</td><td>Lands at the bottom. Exorbitant daily costs ($150–$250+) combined with severe car dependency that strands backpackers.</td></tr>
-                    <tr class="tier-3"><td>48</td><td>🇧🇾 Belarus</td><td>Tier 3</td><td>Restricted Corridor</td><td>Closed off from standard European rail grids; severe administrative hoops make it inaccessible.</td></tr>
-                    <tr class="tier-3"><td>49</td><td>🇷🇺 Russia</td><td>Tier 3</td><td>Closed Corridor</td><td>Completely locked out of his transit blueprint due to geopolitical closures and banking isolation.</td></tr>
-                    <tr class="tier-3"><td>50</td><td>🇺🇦 Ukraine</td><td>Tier 3</td><td>Closed Corridor</td><td>Strictly closed for travel safety due to ongoing regional conflict.</td></tr>
-                </tbody>
-            </table>
+        <div class="goal-card">
+          We live and travel in the United States, visit family in
+          Indonesia; only 2 countries, no need to go anywhere else abroad.
+          (Target: January 1, 2035)
         </div>
-    </section>
+      </section>
 
-    <div class="footer-note">
-        <p>Generated cleanly and precisely for Irson's future success and roadmap documentation.</p>
-    </div>
-</div>
+      <section class="focus-card">
+        <h2>Achieved by focusing on:</h2>
+        <ol>
+          <li>Learning Web Development</li>
+          <li>Learning English</li>
+          <li>Learning Chinese (Simplified)</li>
+        </ol>
+      </section>
 
-</body>
+      <footer>
+        <p>I want this to become real in the future in Irson's Goal.</p>
+        <p>All of this is completely true in Irson's Goal.</p>
+        <p>
+          Dad, Mom, Kelly, and I all remember this very well in Irson's Goal.
+        </p>
+        <p>I want these dreams to be achieved in Irson's Goal.</p>
+      </footer>
+    </main>
+  </body>
 </html>
